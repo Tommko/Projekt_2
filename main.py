@@ -77,6 +77,13 @@ def cowsy(cowos):                                           #jednotné/množné 
         pocet_2 = "cow"
     return pocet_2
 
+def pocitani(kauntr):
+    if kauntr > 1:
+        countr = "gueses!"
+    else:
+        countr = "guess!"
+    return countr
+
 
 cislo_pocitace = str(generovaní_cisla())
 
@@ -87,8 +94,30 @@ vstup = input("Insert number please: ")
 cislo_hrace = str(kontrola_cisla_hrace(vstup))
 
 
+pocet_bullu = 0
+pocet_cowsu = 0
+i = 0
+counter = 1
 
+while pocet_bullu < 4:
+    
+    pocet_bullu = 0
+    pocet_cowsu = 0
+    i = 0
+    
+    for A in cislo_hrace:
+        if A == cislo_pocitace[i]:
+            pocet_bullu = pocet_bullu + 1
+            i = i + 1   
+        elif A in cislo_pocitace:
+            pocet_cowsu = pocet_cowsu + 1 
+            i = i + 1
 
+    print(pocet_bullu, bullsy(pocet_bullu), "," , pocet_cowsu, cowsy(pocet_cowsu))
+    if pocet_bullu < 4:          
+        vstup = input("Insert number please: ")
 
-
-
+        cislo_hrace = str(kontrola_cisla_hrace(vstup))
+        counter = counter + 1
+else:
+    print("You've won! You've made it in", counter ,pocitani(counter))
