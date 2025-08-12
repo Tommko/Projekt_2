@@ -6,118 +6,142 @@ email: kolarik-tomas@seznam.cz
 """
 import random
 
-cary = "_"*47
+lines = "_"*47
 
-uvodni_zprava = f"""
-Hi there!
-{cary}
-I've generated a random 4 digit number for you.
-Let's play a bulls and cows game.
-{cary}
-"""
-
-
-def generovaní_cisla():                                     #vygeneruje náhodné 4 ciferné číslo
-    moznost = range(0,9,1)
-    moznost_nula = range(1,9,1)
-
-    nahodne_cislo = str(random.choice(moznost_nula))
-
-    while len(nahodne_cislo) != 4:
-        vyber = str(random.choice(moznost))
-        while vyber in nahodne_cislo:
-            vyber = str(random.choice(moznost))
-        else:
-            nahodne_cislo = nahodne_cislo + vyber
-
-    return nahodne_cislo
-
-def kontrola_cisla_hrace(vstup):                            #kontrola čísla zadaného uživatelem
-    pomoc_unikatni_cislice = []
-    for A in vstup:
-        if str(vstup).count(A) > 1:
-            pomoc_unikatni_cislice.append(False)
-        else:
-            pomoc_unikatni_cislice.append(True)
-    if pomoc_unikatni_cislice.count(True) < 4:
-        vystup_unikatni_cislice = False
-    else:
-        vystup_unikatni_cislice = True
-        
-    X = [len(vstup) == 4, vstup.isnumeric(), str(vstup[0]) != "0", vystup_unikatni_cislice]
-
-    while X.count(True) != 4:
-        pomoc_unikatni_cislice = []
-        vstup = input("Warning! Number must be 4 digits long, can't contain duplicates, letters or start with 0!: ")
-        for A in vstup:
-            if str(vstup).count(A) > 1:
-                pomoc_unikatni_cislice.append(False)
-            else:
-                pomoc_unikatni_cislice.append(True)
-        if pomoc_unikatni_cislice.count(True) < 4:
-            vystup_unikatni_cislice = False
-        else:
-            vystup_unikatni_cislice = True
-        X = [len(vstup) == 4, vstup.isnumeric(), str(vstup[0]) != "0", vystup_unikatni_cislice]
-    else:
-        vstup = vstup
-    return vstup
-                                 
-def bullsy(bullos):                                         #jednotné/množné číslo pro býky
-    if bullos > 1:
-        pocet_1 = "bulls"
-    else:
-        pocet_1 = "bull"
-    return pocet_1
-
-def cowsy(cowos):                                           #jednotné/množné číslo pro krávy
-    if cowos > 1:
-        pocet_2 = "cows"
-    else:
-        pocet_2 = "cow"
-    return pocet_2
-
-def pocitani(kauntr):
-    if kauntr > 1:
-        countr = "gueses!"
-    else:
-        countr = "guess!"
-    return countr
-
-
-cislo_pocitace = str(generovaní_cisla())
-
-print(uvodni_zprava)
-
-vstup = input("Insert number please: ")
-
-cislo_hrace = str(kontrola_cisla_hrace(vstup))
-
-
-pocet_bullu = 0
-pocet_cowsu = 0
-i = 0
+length_of_number = 4
+bulls = 0
+cows = 0
 counter = 1
 
-while pocet_bullu < 4:
-    
-    pocet_bullu = 0
-    pocet_cowsu = 0
-    i = 0
-    
-    for A in cislo_hrace:
-        if A == cislo_pocitace[i]:
-            pocet_bullu = pocet_bullu + 1
-            i = i + 1   
-        elif A in cislo_pocitace:
-            pocet_cowsu = pocet_cowsu + 1 
-            i = i + 1
+introduction = f"""
+Hi there!
+{lines}
+I've generated a random {length_of_number} digit number for you.
+Let's play a bulls and cows game.
+{lines}
+"""
 
-    print(pocet_bullu, bullsy(pocet_bullu), "," , pocet_cowsu, cowsy(pocet_cowsu))
-    if pocet_bullu < 4:          
-        vstup = input("Insert number please: ")
+# def all_functions():
+#     generate_number()
+#     check_uniqueness(variable_1)
+#     player_number_check()
+#     bulls_numnber()
+#     cows_number()
+#     guesses_number()
 
-        cislo_hrace = str(kontrola_cisla_hrace(vstup))
+
+def generate_number():                                             #generate random number
+    digit_choices = range(0,10,1)
+    numbers = random.sample(digit_choices,4)
+    generated_number = ""
+    if numbers[0] == 0:
+        numbers = random.sample(digit_choices,4)
+    
+    for X in numbers:
+        generated_number = generated_number + str(X)
+    return generated_number
+
+def check_uniqueness(entry):
+    
+    for A in entry:
+        if str(entry).count(A) > 1:
+            uniqueness_help.append(False)
+        else:
+            uniqueness_help.append(True)
+    
+    return uniqueness_help
+
+def player_number_check(variable_1):                               #checks if digits in players number are unique
+    global uniqueness_help
+
+    uniqueness_help = []
+
+    check_uniqueness(variable_1)  
+
+    if uniqueness_help.count(True) < length_of_number:
+        unique_number_output = False
+    else:
+        unique_number_output = True
+        
+    X = [len(variable_1) == length_of_number, variable_1.isnumeric(), str(variable_1[0]) != "0", unique_number_output]
+
+    while X.count(True) != length_of_number:
+        
+        uniqueness_help = []
+
+        variable_1 = input("Warning! Number must be length_of_number digits long, can't contain duplicates, letters or start with 0!: ")
+        
+        check_uniqueness(variable_1)
+
+        if uniqueness_help.count(True) < length_of_number:
+            unique_number_output = False
+        else:
+            unique_number_output = True
+        X = [len(variable_1) == length_of_number, variable_1.isnumeric(), str(variable_1[0]) != "0", unique_number_output]
+
+    return variable_1
+                                 
+def bulls_numnber(bulls_input):                                    #decision about singular or plural of bulls
+    if bulls_input > 1:
+        bulls_count = "bulls"
+    else:
+        bulls_count = "bull"
+    return bulls_count
+
+def cows_number(cows_input):                                       #decision about singular or plural of cows
+    if cows_input > 1:
+        cows_count = "cows"
+    else:
+        cows_count = "cow"
+    return cows_count
+
+def guesses_number(guesses_input):                                 #decision about singular or plural of guesses
+    if guesses_input > 1:
+        guesses_count = "gueses!"
+    else:
+        guesses_count = "guess!"
+    return guesses_count
+
+def main_function():                                               #main function of the game
+    global player_number
+    global bulls
+    global cows
+    global counter
+    for i, A in enumerate(player_number, 0):
+        if A == computer_number[i]:
+            bulls = bulls + 1
+        elif A in computer_number:
+            cows = cows + 1
+        
+    print(bulls, bulls_numnber(bulls), "," , cows, cows_number(cows))
+    print(lines)
+    
+    
+    if bulls < length_of_number:
+        variable_1 = input("Insert number please: ")
+
+        player_number = str(player_number_check(variable_1))
         counter = counter + 1
-else:
-    print("You've won! You've made it in", counter ,pocitani(counter))
+    
+    return bulls, cows, counter
+
+if __name__ == "__main__":
+
+    computer_number = str(generate_number())
+
+    print(introduction)
+
+    variable_1 = input("Insert number please: ")         
+
+    player_number = str(player_number_check(variable_1))  
+
+
+    while bulls < length_of_number:
+        
+        bulls = 0
+        cows = 0
+        
+        main_function()
+        
+    else:
+        print("You've won! You've made it in", counter ,guesses_number(counter))
