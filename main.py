@@ -21,15 +21,6 @@ Let's play a bulls and cows game.
 {lines}
 """
 
-# def all_functions():
-#     generate_number()
-#     check_uniqueness(variable_1)
-#     player_number_check()
-#     bulls_numnber()
-#     cows_number()
-#     guesses_number()
-
-
 def generate_number():                                             #generate random number
     digit_choices = range(0,10,1)
     numbers = random.sample(digit_choices,4)
