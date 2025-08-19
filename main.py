@@ -53,7 +53,7 @@ def plural(word,value):                                            #creates plur
             word = word + "s"
     return word
 
-def main_function(bulls, cows, counter):                           #main function of the game
+def game_function(bulls, cows, counter):                           #main function of the game
     if player_number != computer_number:
         for index, digit in enumerate(player_number, 0):
             if digit == computer_number[index]:
@@ -79,5 +79,5 @@ if __name__ == "__main__":
         bulls = 0
         cows = 0
             
-        main_function(bulls,cows,counter)
+        game_function(bulls,cows,counter)
         counter = counter + 1
