@@ -36,16 +36,11 @@ def generate_number():                                             #generate ran
 def number_check(entry):                                           #checking if the input is right
     for number in entry:
         if str(entry).count(number) > 1 or entry.isnumeric() != True or str(entry[0]) == "0"  or len(entry) != length_of_number:
-            check = False
-        else:
-            check = True
-            
-        if check == True:
-            decision = entry
-            pass
-        else:
             decision = print("Warning! Number must be length_of_number digits long, can't contain duplicates, letters or start with 0!")
             break
+        else:
+            decision = entry
+            pass
     return decision
                                  
 def plural(word,value):                                            #creates plural
@@ -63,7 +58,6 @@ def main_function(bulls, cows, counter):                           #main functio
         for index, digit in enumerate(player_number, 0):
             if digit == computer_number[index]:
                 bulls = bulls + 1
-                
             elif digit in computer_number:
                 cows = cows + 1
                     
@@ -73,7 +67,6 @@ def main_function(bulls, cows, counter):                           #main functio
     else:
         print("You've won! You've made it in", counter ,plural("guess",counter))
     
-
 if __name__ == "__main__":
 
     computer_number = str(generate_number())
@@ -81,9 +74,7 @@ if __name__ == "__main__":
     print(introduction)
 
     while player_number != computer_number:
-        variable_1 = input("Insert number please: ")         
-
-        player_number = str(number_check(variable_1))  
+        player_number = str(number_check(input("Insert number please: ")))  
             
         bulls = 0
         cows = 0
